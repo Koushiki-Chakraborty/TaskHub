@@ -26,8 +26,14 @@ A full-stack Task Management application featuring secure authentication, a dyna
 
 ## System Architecture
 
-![TaskHub Architecture](./assets/system-architecture-diagram.png)
+![TaskHub Architecture](./frontend/assets/system-architecture-diagram.png)
 
+The diagram above illustrates the full-stack lifecycle of the application:
+- **Client Tier:** A React SPA that manages state via the Context API and communicates with the server using Axios.
+- **Security Tier:** A custom JWT Middleware that validates tokens and protects sensitive routes.
+- **Logic Tier:** Express controllers that handle specialized business logic for Authentication, Profile management, and Task CRUD.
+- **Data Tier:** MongoDB used as the primary data store with specialized collections for Users and Tasks.
+  
 ---
 
 ## Tech Stack
