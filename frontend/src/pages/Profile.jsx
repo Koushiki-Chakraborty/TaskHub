@@ -12,6 +12,8 @@ const Profile = () => {
     email: user?.email || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const isDirty =
+    formData.name !== user?.name || formData.email !== user?.email;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,6 +83,7 @@ const Profile = () => {
             <Button
               type="submit"
               isLoading={isSubmitting}
+              disabled={!isDirty || isSubmitting}
               className="flex items-center gap-2"
             >
               <Save size={18} /> Save Changes

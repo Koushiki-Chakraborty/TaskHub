@@ -153,5 +153,3 @@ A complete **Postman Collection** is included in the `docs/` folder.
 1. Import `docs/TaskHub.postman_collection.json` into Postman.
 2. Set the `base_url` variable if your port differs from `5000`.
 3. Use the **Login** request to get a token and paste it into the `jwt_token` variable to access protected routes.
-
----

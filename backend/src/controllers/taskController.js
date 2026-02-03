@@ -10,7 +10,6 @@ exports.getTasks = async (req, res) => {
 
     // Add Title Search logic
     if (req.query.search) {
-      // This looks for the search string anywhere inside the title
       query.title = { $regex: req.query.search, $options: "i" };
     }
 
@@ -29,9 +28,10 @@ exports.getTasks = async (req, res) => {
       data: tasks,
     });
   } catch (error) {
+    console.error("GetTasks Error:", error);
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: "Server Error",
     });
   }
 };
@@ -41,13 +41,26 @@ exports.getTasks = async (req, res) => {
 // @access  Private
 exports.createTask = async (req, res) => {
   try {
-    // Add user to req.body from the auth middleware
-    req.body.user = req.user.id;
+    const { title, description, status } = req.body;
 
-    const task = await Task.create(req.body);
+    if (!title || title.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a task title",
+      });
+    }
+
+    const task = await Task.create({
+      title,
+      description,
+      status: status || "pending",
+      user: req.user.id,
+    });
+
     res.status(201).json({ success: true, data: task });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("CreateTask Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -62,13 +75,14 @@ exports.getTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({
         success: false,
-        message: "Task not found or you don't have permission to view it",
+        message: "Task not found",
       });
     }
 
     res.status(200).json({ success: true, data: task });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("GetTask Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -93,6 +107,13 @@ exports.updateTask = async (req, res) => {
       });
     }
 
+    if (req.body.title && req.body.title.trim() === "") {
+      return res.status(400).json({
+        success: false,
+        message: "Task title cannot be empty",
+      });
+    }
+
     task = await Task.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
@@ -100,7 +121,8 @@ exports.updateTask = async (req, res) => {
 
     res.status(200).json({ success: true, data: task });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("UpdateTask Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -129,6 +151,7 @@ exports.deleteTask = async (req, res) => {
 
     res.status(200).json({ success: true, message: "Task removed" });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("DeleteTask Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };

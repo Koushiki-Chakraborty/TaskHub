@@ -2,17 +2,37 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Helper function to validate email format
+const validateEmail = (email) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};
+
 // @desc    Register a new user
 // @route   POST /api/v1/auth/signup
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validation
+    // Basic empty field check
     if (!name || !email || !password) {
       return res
         .status(400)
         .json({ success: false, message: "Please provide all fields" });
+    }
+    // Validate email format
+    if (!validateEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a valid email address",
+      });
+    }
+    // Validate password length
+    if (password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters long",
+      });
     }
 
     // Check if user already exists
@@ -49,7 +69,8 @@ exports.register = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Registration Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -97,7 +118,8 @@ exports.login = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Login Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -113,7 +135,8 @@ exports.getMe = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("GetMe Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 
@@ -132,6 +155,13 @@ exports.updateProfile = async (req, res) => {
 
     // Check if email is being changed and if it's already taken
     if (req.body.email && req.body.email !== user.email) {
+      if (!validateEmail(req.body.email)) {
+        return res.status(400).json({
+          success: false,
+          message: "Please provide a valid email address",
+        });
+      }
+
       const emailExists = await User.findOne({ email: req.body.email });
       if (emailExists) {
         return res
@@ -144,8 +174,6 @@ exports.updateProfile = async (req, res) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
 
-    // Save updated user (This will also trigger password hashing if you have it in a .pre('save') hook,
-    // so we ensure we aren't accidentally re-hashing or needing a password here)
     const updatedUser = await user.save();
 
     res.status(200).json({
@@ -157,6 +185,7 @@ exports.updateProfile = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error("Update Profile Error:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };

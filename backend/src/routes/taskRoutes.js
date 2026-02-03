@@ -18,8 +18,8 @@ router
 
 router
   .route("/:id")
-  .get(protect, getTask) // Get single task
-  .put(updateTask) // Update task
-  .delete(deleteTask); // Delete task
+  .get(getTask) // Get single task -> GET /api/v1/tasks/:id
+  .put(updateTask) // Update task -> PUT /api/v1/tasks/:id
+  .delete(deleteTask); // Delete task -> DELETE /api/v1/tasks/:id
 
 module.exports = router;

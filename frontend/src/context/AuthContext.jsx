@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }) => {
             setUser(response.data);
           } else {
             localStorage.removeItem("token");
+            setUser(null);
           }
         } catch (error) {
           console.error("Auth failed", error);
@@ -38,7 +39,8 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false, message: response.message || "Login failed" };
     } catch (error) {
-      return { success: false, message: error.message || "Login failed" };
+      const errorMsg = error.response?.data?.message || "Login failed";
+      return { success: false, message: errorMsg };
     }
   };
 
@@ -51,7 +53,8 @@ export const AuthProvider = ({ children }) => {
       }
       return { success: false, message: response.message || "Signup failed" };
     } catch (error) {
-      return { success: false, message: error.message || "Signup failed" };
+      const errorMsg = error.response?.data?.message || "Signup failed";
+      return { success: false, message: errorMsg };
     }
   };
 
@@ -59,13 +62,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authService.updateProfile(profileData);
       if (response.success) {
-        // Update the local state with the fresh data from the backend
         setUser(response.data);
         return { success: true };
       }
       return { success: false, message: response.message || "Update failed" };
     } catch (error) {
-      return { success: false, message: error.message || "Update failed" };
+      const errorMsg = error.response?.data?.message || "Update failed";
+      return { success: false, message: errorMsg };
     }
   };
 
@@ -79,7 +82,7 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider
       value={{ user, loading, login, signup, logout, updateUser }}
     >
-      {children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
