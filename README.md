@@ -4,6 +4,13 @@ A full-stack Task Management application featuring secure authentication, a dyna
 
 ---
 
+## Live Links
+
+- **Frontend:** [https://contact-manager-vert-two.vercel.app/](https://taskhub-frontend-eight.vercel.app/)
+- **Backend API:** [https://connecthub-backend-g8pu.onrender.com/](https://taskhub-backend-myms.onrender.com/)
+
+---
+
 ## Features
 
 ### **Frontend**
