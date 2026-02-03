@@ -29,11 +29,12 @@ A full-stack Task Management application featuring secure authentication, a dyna
 ![TaskHub Architecture](./frontend/src/assets/system-architecture-diagram.png)
 
 The diagram above illustrates the full-stack lifecycle of the application:
+
 - **Client Tier:** A React SPA that manages state via the Context API and communicates with the server using Axios.
 - **Security Tier:** A custom JWT Middleware that validates tokens and protects sensitive routes.
 - **Logic Tier:** Express controllers that handle specialized business logic for Authentication, Profile management, and Task CRUD.
 - **Data Tier:** MongoDB used as the primary data store with specialized collections for Users and Tasks.
-  
+
 ---
 
 ## Tech Stack
@@ -50,7 +51,7 @@ The diagram above illustrates the full-stack lifecycle of the application:
 ### **1. Clone the Repository**
 
 ```bash
-git clone [https://github.com/Koushiki-Chakraborty/TaskHub.git](https://github.com/Koushiki-Chakraborty/TaskHub.git)
+git clone https://github.com/Koushiki-Chakraborty/TaskHub.git
 cd TaskHub
 ```
 
@@ -101,32 +102,28 @@ npm run dev
 
 ## API Reference
 
-## Authentication
+### Authentication
 
-| Method | Endpoint     | Description                    | Auth Required |
-| ------ | ------------ | ------------------------------ | ------------- |
-| POST   | /auth/signup | Create a new user account      | No            |
-| POST   | /auth/login  | Authenticate user & return JWT | No            |
+| Method | Endpoint              | Description                    | Auth Required |
+| :----- | :-------------------- | :----------------------------- | :------------ |
+| `POST` | `/api/v1/auth/signup` | Create a new user account      | No            |
+| `POST` | `/api/v1/auth/login`  | Authenticate user & return JWT | No            |
 
----
+### Profile
 
-## Profile
+| Method | Endpoint          | Description                     | Auth Required |
+| :----- | :---------------- | :------------------------------ | :------------ |
+| `GET`  | `/api/v1/auth/me` | Retrieve current user's profile | Yes           |
+| `PUT`  | `/api/v1/auth/me` | Update user name and email      | Yes           |
 
-| Method | Endpoint | Description                     | Auth Required |
-| ------ | -------- | ------------------------------- | ------------- |
-| GET    | /auth/me | Retrieve current user's profile | Yes           |
-| PUT    | /auth/me | Update user name and email      | Yes           |
+### Tasks (CRUD)
 
----
-
-## Tasks (CRUD)
-
-| Method | Endpoint   | Description                          | Auth Required |
-| ------ | ---------- | ------------------------------------ | ------------- |
-| GET    | /tasks     | Fetch all tasks (with search/filter) | Yes           |
-| GET    | /tasks/:id | Get details for a single task        | Yes           |
-| POST   | /tasks     | Create a new task                    | Yes           |
-| PUT    | /tasks/:id | Update an existing task              | Yes           |
-| DELETE | /tasks/:id | Permanently remove a task            | Yes           |
+| Method   | Endpoint            | Description                          | Auth Required |
+| :------- | :------------------ | :----------------------------------- | :------------ |
+| `GET`    | `/api/v1/tasks`     | Fetch all tasks (with search/filter) | Yes           |
+| `GET`    | `/api/v1/tasks/:id` | Get details for a single task        | Yes           |
+| `POST`   | `/api/v1/tasks`     | Create a new task                    | Yes           |
+| `PUT`    | `/api/v1/tasks/:id` | Update an existing task              | Yes           |
+| `DELETE` | `/api/v1/tasks/:id` | Permanently remove a task            | Yes           |
 
 ---
