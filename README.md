@@ -26,7 +26,7 @@ A full-stack Task Management application featuring secure authentication, a dyna
 
 ## System Architecture
 
-![TaskHub Architecture](./frontend/assets/system-architecture-diagram.png)
+![TaskHub Architecture](./frontend/src/assets/system-architecture-diagram.png)
 
 The diagram above illustrates the full-stack lifecycle of the application:
 - **Client Tier:** A React SPA that manages state via the Context API and communicates with the server using Axios.
