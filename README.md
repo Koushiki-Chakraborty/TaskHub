@@ -24,6 +24,12 @@ A full-stack Task Management application featuring secure authentication, a dyna
 
 ---
 
+## System Architecture
+
+![TaskHub Architecture](./assets/system-architecture-diagram.png)
+
+---
+
 ## Tech Stack
 
 - **Frontend:** React.js, Vite, Tailwind CSS, Lucide React, Axios, React Router.
