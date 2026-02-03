@@ -26,7 +26,7 @@ A full-stack Task Management application featuring secure authentication, a dyna
 
 ## System Architecture
 
-![TaskHub Architecture](./frontend/src/assets/system-architecture-diagram.png)
+![TaskHub Architecture](./docs/system-architecture-diagram.png)
 
 The diagram above illustrates the full-stack lifecycle of the application:
 
@@ -125,5 +125,33 @@ npm run dev
 | `POST`   | `/api/v1/tasks`     | Create a new task                    | Yes           |
 | `PUT`    | `/api/v1/tasks/:id` | Update an existing task              | Yes           |
 | `DELETE` | `/api/v1/tasks/:id` | Permanently remove a task            | Yes           |
+
+---
+
+## Scalability & Production Roadmap
+
+To transition this application from a local MVP to a production-ready system, I would implement:
+
+- **Infrastructure:** Containerize the app using **Docker** and deploy to **AWS/GCP** with a Load Balancer for horizontal scaling.
+- **Database Optimization:** Implement MongoDB **indexing** on `userId` and `status` fields to maintain query performance as the data grows.
+- **Caching:** Integrate a **Redis** layer to cache user profiles and frequently accessed task lists, reducing database load.
+- **Enhanced Security:** Implement **Rate Limiting** to prevent Brute Force attacks and transition to **httpOnly cookies** for safer JWT storage.
+- **Global State & Performance:** Add **Pagination** for task fetching and implement **Redux Toolkit** if the state complexity increases.
+
+---
+
+## Demo & Testing
+
+**Test Credentials:**
+
+- **Email:** `test@gmail.com`
+- **Password:** `Password123`
+
+**API Testing:**
+A complete **Postman Collection** is included in the `docs/` folder.
+
+1. Import `docs/TaskHub.postman_collection.json` into Postman.
+2. Set the `base_url` variable if your port differs from `5000`.
+3. Use the **Login** request to get a token and paste it into the `jwt_token` variable to access protected routes.
 
 ---
