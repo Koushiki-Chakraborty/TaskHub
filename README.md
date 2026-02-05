@@ -9,6 +9,16 @@ A full-stack Task Management application featuring secure authentication, a dyna
 - **Frontend:** [https://taskhub-frontend-eight.vercel.app/](https://taskhub-frontend-eight.vercel.app/)
 - **Backend API:** [https://taskhub-backend-myms.onrender.com/](https://taskhub-backend-myms.onrender.com/)
 
+### ⚠️ Note on Cold Starts
+The backend for this project is hosted on Render's Free Tier.
+
+-  The First Request: If the site hasn't been visited recently, the server will be in "hibernation." The first login or sign-up attempt may take 40–60 seconds to wake up.
+
+- The 404/Delay: You may see a temporary 404 or a long loading state in the console during this "Cold Start" period.
+
+- Performance: Once the server is awake, the application will respond instantly.
+
+**Please allow the server a minute to initialize on your first attempt.**
 ---
 
 ## Features
